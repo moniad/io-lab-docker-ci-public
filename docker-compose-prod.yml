@@ -1,11 +1,17 @@
+# run as: sudo docker-compose -f docker-compose-prod.yml up -d
 
 version: '3.0'
 services:
   web:
-    # TODO: image, ports and redis dependency
+    image: monikad/io-docker
+    ports:
+      - 5000:5000
+    depends_on:
+      - redis
     environment:
       REDIS_HOST: redis
       REDIS_PORT: 6379
   redis:
     image: redis:6.0-rc3
-    # TODO: persistence for redis. You need to persist /data directory.
+    volumes:
+    - ./redis.data:/data
